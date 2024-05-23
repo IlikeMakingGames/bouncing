@@ -1,0 +1,56 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Constants
+WIDTH, HEIGHT = 800, 600
+BOX_SIZE = 50
+BOX_COLOR = (0, 0, 0)
+BG_COLOR = (255, 255, 255)
+SPEED = [3, 3]
+
+# Set up the display
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Bouncing Black Box")
+
+# Initial position of the box
+box_x, box_y = WIDTH // 2, HEIGHT // 2
+
+# Create a clock object to manage the frame rate
+clock = pygame.time.Clock()
+
+# Main game loop
+running = True
+while running:
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Update the position of the box
+    box_x += SPEED[0]
+    box_y += SPEED[1]
+
+    # Bounce the box off the walls
+    if box_x <= 0 or box_x >= WIDTH - BOX_SIZE:
+        SPEED[0] = -SPEED[0]
+    if box_y <= 0 or box_y >= HEIGHT - BOX_SIZE:
+        SPEED[1] = -SPEED[1]
+
+    # Fill the screen with background color
+    screen.fill(BG_COLOR)
+
+    # Draw the black box
+    pygame.draw.rect(screen, BOX_COLOR, (box_x, box_y, BOX_SIZE, BOX_SIZE))
+
+    # Update the display
+    pygame.display.flip()
+
+    # Cap the frame rate
+    clock.tick(60)
+
+# Clean up
+pygame.quit()
+sys.exit()
